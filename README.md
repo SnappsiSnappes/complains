@@ -1,13 +1,12 @@
 <details>
 <summary>Скриншоты (нажмите, чтобы развернуть)</summary>
 
-![image](https://github.com/SnappsiSnappes/complains/assets/111605401/c92bf2ec-99a6-4868-af04-2cf752f5e2f4)
-![image](https://github.com/SnappsiSnappes/complains/assets/111605401/e3223595-68ba-4b33-ae74-663b292bc78e)
-![image](https://github.com/SnappsiSnappes/complains/assets/111605401/8f1adaa0-bd89-4a25-b799-9c15f6b48bf5)
-![image](https://github.com/SnappsiSnappes/complains/assets/111605401/b8ddf972-2a15-4d4d-9be6-a89814290aea)
-![image](https://github.com/SnappsiSnappes/complains/assets/111605401/15c23a50-c366-4471-b78f-a8d050254593)
-![image](https://github.com/SnappsiSnappes/complains/assets/111605401/bab1a339-8fb2-4032-8031-42fd424267ad)
-![image](https://github.com/SnappsiSnappes/complains/assets/111605401/5c8b6871-a7f1-49f6-97d1-a3d93e462783)
+![image](https://github.com/SnappsiSnappes/complains/assets/111605401/4963745e-2874-4505-a403-e11e8d4e7e3e)
+![image](https://github.com/SnappsiSnappes/complains/assets/111605401/58749dfd-ccd5-4d2f-85a3-89ad9b4229ec)
+![image](https://github.com/SnappsiSnappes/complains/assets/111605401/d281070a-d825-4528-9b19-0d8944f1997b)
+![image](https://github.com/SnappsiSnappes/complains/assets/111605401/c30b952e-609b-4d6f-9a04-e6b5d27ccb7e)
+
+
 </details>
 
 
