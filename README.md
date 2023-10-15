@@ -46,5 +46,8 @@
 2) Откройте http://localhost:8077.
    - Войдите в систему с логином 'admin' и паролем 'admin'.
 3) phpMyAdmin доступен по адресу http://localhost:8078/.
+  - Сервер: db_service_complains
+  - root
+  - root
 
 
