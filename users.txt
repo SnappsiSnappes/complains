@@ -1,0 +1,15 @@
+
+privilege: [super_user, manager, DM]
+
+username: snappsi
+password: NASDOASNDKNW___asd0i39()
+
+
+username: admin
+password: COKPsdkf32k4ol2zxcple?@zxcczxasd
+
+username: DM
+password: DM
+
+username: manager
+password: manager
