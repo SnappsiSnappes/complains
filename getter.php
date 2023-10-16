@@ -133,13 +133,16 @@ if ($_SESSION['privilege'] == 'super_user') {
         $mail = 'company2@gmail.com';
     }
 
+    $text = $result[0]['full_text'];
+    $escaped_text = htmlspecialchars($text, ENT_QUOTES);
+
     echo <<<EOT
     <div class='container'>
 
     <form action="sendMail.php" method="post">
     <input type="hidden" name="inner_number" value="{$_GET['select_from_post']}">
     <input type="hidden" name="title" value="{$result[0]['title']}">
-    <input type="hidden" name="text" value="{$result[0]['full_text']}">
+    <input type="hidden" name="text" value="'.$escaped_text.'">
     <input type="hidden" name="mail" value="{$mail}">
 
     <div class="d-grid gap-2 col-6 mx-auto">
