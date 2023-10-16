@@ -127,6 +127,7 @@ $msg_count = count($obj_list);
 
 
 <script>
+    // скрипт делает активным раздел на котором находится пользователь
     document.addEventListener("DOMContentLoaded", function() {
         var navItems = document.querySelectorAll('.nav-item .nav-link');
         var buttonMSG = document.querySelector("form[action='msg.php'] button");
