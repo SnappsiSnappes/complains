@@ -28,7 +28,7 @@ $text =  $_POST['commentText'];
 $files = $_FILES['img[]'];
 $from_who = $_POST['from_who'];
 if(!!!$from_who){$from_who='Гость';}
-
+$date = date('Y-m-d_H:i:s');
 
 
 
@@ -82,6 +82,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } catch (Exception $e) {
       echo 'Ошибка: ' . $e;
     }
+    // #! отправка уведомления
+    $getter->send_msg($from_who,$manager,$date,'На вашу жалобу по магазину с внутренним номером: '.$inner_number." Оставлен комментарий от: {$from_who} :
+    \n {$text}");
     #!! end 
     require_once 'head.php'; 
 
