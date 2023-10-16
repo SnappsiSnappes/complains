@@ -145,7 +145,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="mb-3 row pt-2">
                     <label for="inner_number" class="col-sm-2 col-form-label">Внутренний номер:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inner_number" name="inner_number" required>
+                        <input type="number" min=1 class="form-control" id="inner_number" name="inner_number" required>
                     </div>
                 </div>
                 <div class="mb-3 row">
