@@ -14,7 +14,7 @@ require_once 'database.php';
 
 #! activate
 if ($_POST['action'] == 'activate') {
-  $getter->publish($_POST['inner_number']);
+  $getter->publish($_POST['id']);
 }
 ?>
 
@@ -38,20 +38,31 @@ if ($_POST['action'] == 'activate') {
     $start = ($page - 1) * $limit;
 
     #! main obj
-    $obj_list = $getter->get_company2_objects();
+    $obj_list = $getter->get_com2_objects();
 
     #! Pagination items slice
     $items = array_slice($obj_list, $start, $limit);
 
+    #! Pagination
+    $total_pages = ceil(count($obj_list) / $limit);
+    echo '<nav aria-label="Page navigation example" class="d-flex justify-content-center pt-3">';
+    echo '<ul class="pagination pagination-lg">';
+    for ($i = 1; $i <= $total_pages; $i++) {
+        echo '<li class="page-item"><a class="page-link" href="?page=' . $i . '">' . $i . '</a></li>';
+    }
+    echo '</ul>';
+    echo '</nav>';
+    #! Pagination end
+
     foreach ($items as $inside_array) {
       #! внутренний номер
-      $inner_number = $inside_array['inner_number'];
+      $id = $inside_array['id'];
 
       #! полное имя мэнэджера
-      $user_full_name = $getter->get_user_full_name($inner_number);
+      $user_full_name = $getter->get_user_full_name($id);
 
       #! imgs = список картинок и файлов текущего объекта
-      $img_obj = $getter->get('img', $inner_number);
+      $img_obj = $getter->get('img', $id);
       $img_obj?$imgs_string='Есть':$imgs_string='Нет';
       
 
@@ -73,18 +84,18 @@ if ($_POST['action'] == 'activate') {
     </div>
     
     <div class='p-2 ms-auto w-25'>
-    <a href="getter.php?select_from_post={$inside_array['inner_number']}" class="col-12 m-1  btn btn-primary" role="button">Посмотреть</a>
+    <a href="getter.php?select_from_post={$inside_array['id']}" class="col-12 m-1  btn btn-primary" role="button">Посмотреть</a>
 
 
-    <form action="company2_controller.php" method="post">
+    <form action="com2_controller.php" method="post">
     <input type="hidden" name="action" value="activate">
-    <input type="hidden" name="inner_number" value="{$inside_array['inner_number']}">
+    <input type="hidden" name="id" value="{$inside_array['id']}">
     <input type="submit" class='col-12 m-1   btn  btn-primary' value="Опубликовать">
     </form>
 
   
     <form action="discard.php" method="post">
-    <input type="hidden" name="inner_number" value="{$inside_array['inner_number']}">
+    <input type="hidden" name="id" value="{$inside_array['id']}">
     <input type="submit" class='col-12 m-1   btn  btn-secondary' value="Отправить на доработку">
     </form>
 
@@ -101,16 +112,8 @@ if ($_POST['action'] == 'activate') {
     };
 
 
-    #! Pagination
-    $total_pages = ceil(count($obj_list) / $limit);
-    echo '<nav aria-label="Page navigation example" class="d-flex justify-content-center pt-3">';
-    echo '<ul class="pagination pagination-lg">';
-    for ($i = 1; $i <= $total_pages; $i++) {
-        echo '<li class="page-item"><a class="page-link" href="?page=' . $i . '">' . $i . '</a></li>';
-    }
-    echo '</ul>';
-    echo '</nav>';
-    
+
+
     
 
     ?>

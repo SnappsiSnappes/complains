@@ -27,14 +27,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // die();
     $inner_number = $_POST['inner_number'];
     #!! main insert
-    $obj_check = $getter->get('object', $inner_number);
+    //#! отключение проверки $obj_check = $getter->get('object', $inner_number);
     // #!! проверка на существующие записи 
     if (!$obj_check[0]) {
 
 
         $title = $_POST['title'];
         $full_text = $_POST['full_text'];
-        $date_when_created = date('Y-m-d_H:i:s', strtotime('+3 hours'));
+        $date_when_created = date('Y-m-d_H:i:s');
         $user_login = $_SESSION['login'];
         $agreement = $_POST['agreement'];
         $service = $_POST['service'];
@@ -42,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 
-
+        #??
         // #! Загрузка данных в таблицу object
         $stmt = $pdo->prepare("INSERT INTO object (inner_number, title, full_text, date_when_created, user_login,agreement,service) VALUES (?, ?, ?, ?,?,?,?)");
         $stmt->execute([
@@ -58,19 +58,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Получение ID последнего добавленного объекта
         $obj_id = $pdo->lastInsertId('object');
 
-        // Создание папки для изображений
-        $target_dir = 'img/' . $inner_number;
-        if (!file_exists($target_dir)) {
-            mkdir($target_dir, 0777, true);
-        }
+
 
         // Загрузка изображений в таблицу img
 
-        if (isset($_FILES['img']) && !empty($_FILES['img']['tmp_name'])) {
+        if ($_FILES['img']['name'][0] && !empty($_FILES['img']['tmp_name']) ) {
+
+
+            // Создание папки для изображений
+            $target_dir = 'img/' . $obj_id;
+            if (!file_exists($target_dir)) {
+                mkdir($target_dir, 0777, true);
+            }
             foreach ($_FILES['img']['tmp_name'] as $key => $tmp_name) {
 
                 if ($_FILES['img']['error'][$key] == 0) {
-                    $img = $date_when_created.'_'.$_FILES['img']['name'][$key];
+                    $img = $date_when_created . '_' . $_FILES['img']['name'][$key];
                     $target = $target_dir . '/' . $img;
 
                     // Перемещение загруженного файла в целевой каталог
@@ -85,6 +88,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         echo '<h1 class="alert alert-danger container text-center"> В базе уже есть жалоба на этот магазин </h1>';
     }
+    #??
 }
 
 ?>
@@ -102,10 +106,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 
+
+
+
 <div class="container">
     <div class="row">
         <div class="col-12">
             <h1 class="mt-3 text-center">Создание жалобы</h1>
+
+            <form id='form_to_get' class="form_to_get  pt-5 pb-5" method="post">
+                <label for="Get_data_inner" class=" ">Внутренний номер (Авто заполнение):</label>
+                <input type="text" id="Get_data_inner" name="Get_data_inner" placeholder="">
+                <input type="button" id="submit__" value="Заполнить форму">
+            </form>
             <!-- <p class=" my-3">Внимание! К письму обязательно прикреплять суть разговора с ДМ и СПВ, а так же накладные и фотоотчёты!</p> -->
 
             <!-- <p class="alert alert-warning my-3">Дополните недостающую информацию</p> -->
@@ -172,8 +185,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="col-sm-10">
                         <select name="service" id='service' class='form-control' required>
                             <option value="">Выберите...</option>
-                            <option value='company1'>company1</option>
-                            <option value='company2'>company2</option>
+                            <option value='com2'>com2</option>
+                            <option value='com1'>com1</option>
                         </select>
                     </div>
                 </div>
@@ -182,8 +195,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class='col-sm-10'>
                         <select name='agreement' id='agreement' class='form-control' required>
                             <option value=''>Выберите...</option>
-                            <option value='company1'>company1</option>
-                            <option value='company2'>company2</option>
+                            <option value='com2'>com2</option>
+                            <option value='com1'>com1</option>
                         </select>
                     </div>
                 </div>
@@ -196,58 +209,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 
+            <script>
+                $(document).ready(function() {
+                    $("#submit__").click(function(event) {
+                        event.preventDefault();
 
-            <!--        #!!old         <div class="container ">
-                    <form method="post" enctype="multipart/form-data">
-                        <div class="mb-3 row">
-                            <label for="inner_number" class="col-sm-2 col-form-label">Внутренний номер:</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="inner_number" name="inner_number" required>
-                            </div>
-                        </div>
-                        <div class="mb-3 row">
-                            <label for="title" class="col-sm-2 col-form-label">Название жалобы:</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="title" name="title" required>
-                            </div>
-                        </div>
-                        <div class="mb-3 row">
-                            <label for="full_text" class="col-sm-2 col-form-label">Текст жалобы:</label>
-                            <div class="col-sm-10">
-                                <textarea id="full_text" name="full_text" class="form-control" rows="5" required></textarea>
-                            </div>
-                        </div>
+                        var formData = $("#Get_data_inner").val(); // Получаем данные из формы
 
-                        <div class="mb-3 row">
-                            <label for="img" class="col-sm-2 col-form-label">Приложите файлы - разрешены форматы: img,png,jpg,jpeg,docx,mp3,mp4</label>
-                            <div class="col-sm-10">
-                                <input type="file" id="img" name="img[]" multiple class="form-control">
-                            </div>
-                        </div>
-                        <div class="mb-3 row">
-                            <label for="service" class="col-sm-2 col-form-label">Обслуживает (администратор будет выбран по этому полю)</label>
-                            <div class="col-sm-10">
-                                <select name="service" id='service' class='form-control' required>
-                                    <option value="">Выберите...</option>
-                                    <option value='ООО Рахал'>ООО Рахал</option>
-                                    <option value='ИП Коротеев А.В.'>ИП Коротеев А.В.</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class='mb-3 row'>
-                            <label for='agreement' class='col-sm-2 col-form-label'>Договор С</label>
-                            <div class='col-sm-10'>
-                                <select name='agreement' id='agreement' class='form-control' required>
-                                    <option value=''>Выберите...</option>
-                                    <option value='ООО Рахал'>ООО Рахал</option>
-                                    <option value='ИП Коротеев А.В.'>ИП Коротеев А.В.</option>
-                                </select>
-                            </div>
-                        </div>
+                        $.ajax({
+                            url: 'php_modules/crest/auto_fill.php',
+                            type: 'POST',
+                            data: {
+                                Get_data_inner: formData
+                            }, // Передаем данные из формы
+                            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                            success: function(response) {
+                                var data = JSON.parse(response);
+                                console.log(data);
+                                // теперь вы можете использовать data как JSON-объект
+                                // например, выведите значение 'адресс'
+                                console.log(data['адресс']);
 
-                        <button type='submit' class='btn btn-primary'>Отправить жалобу</button>
+                                $('input[name="external_number"]').val(data["внешний"]);
+                                $('input[name="type_store"]').val(data["тип магазина"]);
+                                $('input[name="rf"]').val(data["субъект рф"]);
+                                $('input[name="adress"]').val(data["адресс"]);
+                                $('input[name="fiodm"]').val(data["фио дм"]);
+                                $('input[name="tdm"]').val(data["тел дм"]);
+                                $('input[name="fiosp"]').val(data["фио св"]);
+                                $('input[name="tsp"]').val(data["тел св"]);
+                                $('input[name="inner_number"]').val(data["внутренний"]);
 
-                    </form> -->
+                                data['обслуживает'] == "64954" ? $('select[id="service"]').val('com1.') : $('select[id="service"]').val('com2');
+
+                                data['договор с'] == "64954" ? $('select[id="agreement"]').val('com1.') : $('select[id="agreement"]').val('com2');
+
+                            }
+                        });
+                    });
+                });
+            </script>
 
 
 
@@ -268,6 +269,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 var labels = {
                     'inner_number': '<br>Внутренний номер',
+
                     'title': '<br>Название жалобы',
                     'mname': '<br>ФИ менеджера',
                     'external_number': '<br>Внешний номер магазина',
@@ -291,7 +293,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     var output = '';
                     var inputs = this.getElementsByTagName('input');
                     for (var i = 0; i < inputs.length; i++) {
-                        if (inputs[i].name != 'img[]' && inputs[i].name != 'title' && inputs[i].name != 'inner_title') {
+                        if (inputs[i].name != 'img[]' && inputs[i].name != 'title' && inputs[i].name != 'inner_title' && inputs[i].name != 'inner_number') {
                             var label = labels[inputs[i].name] || inputs[i].name;
 
                             output += label + ' = ' + inputs[i].value;

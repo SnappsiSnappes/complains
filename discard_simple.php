@@ -9,8 +9,8 @@ require_once 'database.php';
 # $inner_number = $_GET['select_from_post'];
 # $imgs = картинки из этого объекта
 
-$inner_number = $_POST['inner_number'];
-$result = $getter->getter('object', $inner_number);
+$id = $_POST['id'];
+$result = $getter->getter('object', $id);
 // var_dump($result);
 
 
@@ -56,8 +56,8 @@ require_once 'head.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   #!! проверка на существование (1)
-  $object_confirm = $getter->getter('object', $_POST['inner_number']);
-  if ($object_confirm[0]['inner_number'] == 0 or $object_confirm[0]['inner_number'] == null) {
+  $object_confirm = $getter->getter('object', $_POST['id']);
+  if ($object_confirm[0]['id'] == 0 or $object_confirm[0]['id'] == null) {
     echo '<h1 class="alert alert-danger container text-center"> Жалоба не найдена </h1>';
     return;}
     #!! конец
@@ -71,7 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     try {
 
 
-      $object = $getter->delete($_POST['inner_number']);
+      $object = $getter->delete($_POST['id']);
 
 
       echo '<h1 class="alert alert-success container text-center"> Жалоба удалена </h1>';

@@ -16,6 +16,12 @@ session_start();
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/jq.js"></script>
 
+
+    <!-- Подключите CSS Lightbox в заголовке вашего документа -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox-plus-jquery.min.js"></script>
+
+
 </head>
 <body class='' >
 <? require_once 'navbar.php' ?>

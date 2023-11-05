@@ -39,13 +39,13 @@ require_once 'database.php';
 
     foreach ($items as $inside_array) {
       #! внутренний номер
-      $inner_number = $inside_array['inner_number'];
+      $id = $inside_array['id'];
 
       #! полное имя мэнэджера
-      $user_full_name = $getter->get_user_full_name($inner_number);
+      $user_full_name = $getter->get_user_full_name($id);
 
       #! imgs = список картинок и файлов текущего объекта
-      $img_obj = $getter->get('img', $inner_number);
+      $img_obj = $getter->get('img', $id);
       $img_obj?$imgs_string='Есть':$imgs_string='Нет';
       
 
@@ -60,14 +60,14 @@ require_once 'database.php';
     <p class='text-break'><b> Менеджер: </b> {$user_full_name['full_name']} </p>
     <p class='text-break'><b> Название заявки:</b> {$inside_array['title']}</p>
     <p class='text-break'><b> Дата заявки: </b> {$inside_array['date_when_created']} </p>
-    <p class='text-break'><b> Внутренний номер: </b>  {$inside_array['inner_number']} </p>
+    <p class='text-break'><b> Внутренний номер: </b>  {$inside_array['id']} </p>
     <p class='text-break'><b> вложенные файлы: </b>  {$imgs_string} </p>
 
     <p class='text-break'><b> Текст: </b>  <br>  {$inside_array['full_text']} </p>
     </div>
     
     <div class='p-2 ms-auto w-25'>
-    <a href="getter.php?select_from_post={$inside_array['inner_number']}" class="col-12 m-1 h-50 btn btn-primary" role="button">Посмотреть</a>
+    <a href="getter.php?select_from_post={$inside_array['id']}" class="col-12 m-1 h-50 btn btn-primary" role="button">Посмотреть</a>
     </div>
 
     </div>

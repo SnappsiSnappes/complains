@@ -15,7 +15,7 @@ require_once 'database.php';
 
 
 
-// $to_user = $getter->getter('object',$_POST['inner_number']);
+// $to_user = $getter->getter('object',$_POST['id']);
 // $to_user = $to_user[0]['user_login'];
 // var_dump($to_user)
 // var_dump($_POST)
@@ -24,15 +24,13 @@ require_once 'database.php';
 
 // var_dump($to_user[0]['user_login']);
 
-?>
 
-<?
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   #!! проверка на существование (1)
-  $object_confirm = $getter->getter('object', $_POST['inner_number']);
-  if ($object_confirm[0]['inner_number'] == 0 or $object_confirm[0]['inner_number'] == null) {
+  $object_confirm = $getter->getter('object', $_POST['id']);
+  if ($object_confirm[0]['id'] == 0 or $object_confirm[0]['id'] == null) {
     echo '<h1 class="alert alert-danger container text-center"> Жалоба не найдена </h1>';
     return;}
     #!! конец
@@ -40,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 # send msg before delete 
   if ($_POST['action'] == 'delete') {
     #!! (2)(второй раз post , на этот раз action = delete)
-    $to_user = $getter->getter('object',$_POST['inner_number']);
+    $to_user = $getter->getter('object',$_POST['id']);
     $to_user = $to_user[0]['user_login'];
     $date_when_created = date('Y-m-d_H:i:s', strtotime('+3 hours'));
 
@@ -49,14 +47,14 @@ $msg = $getter->send_msg($_SESSION['login'],$to_user,$date_when_created,$_POST['
 
     #!! delete (3)
     try {
-      $object_confirm = $getter->getter('object', $_POST['inner_number']);
+      $object_confirm = $getter->getter('object', $_POST['id']);
 
-      if ($object_confirm[0]['inner_number'] == 0 or $object_confirm[0]['inner_number'] == null) {
+      if ($object_confirm[0]['id'] == 0 or $object_confirm[0]['id'] == null) {
         echo '<h1 class="alert alert-danger container text-center"> Жалоба не найдена </h1>';
         return;
       };
 
-      $object = $getter->delete($_POST['inner_number']);
+      $object = $getter->delete($_POST['id']);
 
 
       echo '<h1 class="alert alert-success container text-center"> Жалоба удалена </h1>';
@@ -81,10 +79,10 @@ $msg = $getter->send_msg($_SESSION['login'],$to_user,$date_when_created,$_POST['
         <div class="mb-3 row">
           <label for="full_text" class="">Текст cообщения:</label>
           <div class="col-12">
-            <textarea id="full_text" name="full_text" class="form-control" rows="5"  required>Заявка на жалобу отклонена. Внутренний номер магазина: <? echo $_POST['inner_number']; ?>. Причина:</textarea>
+            <textarea id="full_text" name="full_text" class="form-control" rows="5"  required>Заявка на жалобу отклонена.<?="\n"?>Ссылка:<?='   https://koroteevav.ru/complain/getter.php?select_from_post='.$_POST['id']."\n";?>Причина:<?="\n"?></textarea>
           </div>
           <div hidden class="col-12">
-            <input type="hidden" name="inner_number" value="<? echo $_POST['inner_number']; ?>">
+            <input type="hidden" name="id" value="<? echo $_POST['id']; ?>">
             <input type="hidden" name="action" value="delete">
 
           </div>

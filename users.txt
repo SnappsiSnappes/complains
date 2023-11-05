@@ -2,11 +2,11 @@
 privilege: [super_user, manager, DM]
 
 username: snappsi
-password: NASDOASNDKNW___asd0i39()
+password: admin
 
 
 username: admin
-password: COKPsdkf32k4ol2zxcple?@zxcczxasd
+password: admin
 
 username: DM
 password: DM

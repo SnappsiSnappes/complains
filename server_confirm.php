@@ -62,7 +62,6 @@ if (isset($_POST['login_submit'])) {
         $_SESSION['notification']='auth_bad';
     }
     }
-    // #!!! оно так работает, я хз почему, не трогать!
     header('Location: login.php');
     
     $_SESSION['notification']=='auth_ok'?:$_SESSION['notification']='auth_bad';

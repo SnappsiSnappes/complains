@@ -1,7 +1,7 @@
 <?php
 
-if (isset($_POST['inner_number'])) {
-    $inner_number = $_POST['inner_number'];
+if (isset($_POST['id'])) {
+    $id = $_POST['id'];
     $title = $_POST['title'];
     $text = $_POST['text'];
     $mail = $_POST['mail']
@@ -24,8 +24,8 @@ $mail = new PHPMailer(true);
 //PHPMailer Object``$mail = new PHPMailer(true); //Argument true in constructor enables exceptions`
 
 //From email address and name
-$mail->From = "ваша почта";
-$mail->FromName = "Жалоба на магазин " . $inner_number;
+$mail->From = "from@is.koroteevav.ru";
+$mail->FromName = "Жалоба на магазин id = " . $id;
 
 //To address and name
 $mail->addAddress($_POST['mail']); //Recipient name is optional
@@ -40,7 +40,7 @@ $mail->isHTML(true);
 
 // $mail->addAttachment("s.png", "s.png");
 // $mail->addAttachment("s2.png", "s2.png");
-$directory = 'img/' . $inner_number . '/';
+$directory = 'img/' . $id . '/';
 $files = glob($directory . '*');
 
 foreach ($files as $file) {
