@@ -6,6 +6,8 @@
 ![image](https://github.com/SnappsiSnappes/complains/assets/111605401/d281070a-d825-4528-9b19-0d8944f1997b)
 ![image](https://github.com/SnappsiSnappes/complains/assets/111605401/c30b952e-609b-4d6f-9a04-e6b5d27ccb7e)
 ![image](https://github.com/SnappsiSnappes/complains/assets/111605401/e718722e-b078-4abc-8fae-d9b518d788be)
+![screencapture-localhost-8077-getter-php-2023-11-14-15_46_01](https://github.com/SnappsiSnappes/complains/assets/111605401/88c50547-54b8-446e-8f1b-40058c4e12dd)
+
 
 
 </details>
