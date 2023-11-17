@@ -32,27 +32,68 @@ if ($_POST['action'] == 'activate') {
     <?
     // #!!! main foreach
 
-    #! Pagination
-    $limit = 5;
-    $page = isset($_GET['page']) ? $_GET['page'] : 1;
-    $start = ($page - 1) * $limit;
+#! Pagination
+$limit = 5;
+$page = isset($_GET['page']) ? $_GET['page'] : 1;
+$start = ($page - 1) * $limit;
 
-    #! main obj
-    $obj_list = $getter->get_com2_objects();
+#! main obj
+$obj_list = $getter->get_com2_objects();
 
-    #! Pagination items slice
-    $items = array_slice($obj_list, $start, $limit);
+#! Pagination items slice
+$items = array_slice($obj_list, $start, $limit);
 
-    #! Pagination
-    $total_pages = ceil(count($obj_list) / $limit);
-    echo '<nav aria-label="Page navigation example" class="d-flex justify-content-center pt-3">';
-    echo '<ul class="pagination pagination-lg">';
-    for ($i = 1; $i <= $total_pages; $i++) {
-        echo '<li class="page-item"><a class="page-link" href="?page=' . $i . '">' . $i . '</a></li>';
-    }
-    echo '</ul>';
-    echo '</nav>';
-    #! Pagination end
+#! Pagination
+$total_pages = ceil(count($obj_list) / $limit);
+echo '<nav aria-label="Page navigation example" class="d-flex justify-content-center pt-3">';
+echo '<ul class="pagination pagination-lg">';
+
+
+// Если текущая страница больше чем 3, добавить многоточие
+if ($page > 3) {
+    // Кнопка для первой страницы
+echo '<li class="page-item"><a class="page-link" href="?page=1">1</a></li>';
+
+echo '<li class="page-item"><a class="page-link" href="#">...</a></li>';
+
+
+}
+
+// Добавить ссылки на две страницы слева от текущей страницы
+for ($i = max(1, $page - 2); $i < $page; $i++) {
+    echo '<li class="page-item"><a class="page-link" href="?page=' . $i . '">' . $i . '</a></li>';
+}
+
+// Добавить ссылку на текущую страницу
+echo '<li class="page-item active"><a class="page-link" href="?page=' . $page . '">' . $page . '</a></li>';
+
+// Добавить ссылки на две страницы справа от текущей страницы
+for ($i = $page + 1; $i <= min($page + 2, $total_pages); $i++) {
+    echo '<li class="page-item"><a class="page-link" href="?page=' . $i . '">' . $i . '</a></li>';
+}
+
+// Если текущая страница меньше чем общее количество страниц минус 2, добавить многоточие
+if ($page < $total_pages - 2) {
+    echo '<li class="page-item"><a class="page-link" href="#">...</a></li>';
+}
+
+if ($page < $total_pages-3 or $page == $total_pages-3){
+  // Кнопка для последней страницы
+echo '<li class="page-item"><a class="page-link" href="?page=' . $total_pages . '">' . $total_pages . '</a></li>';
+
+}
+
+echo '</ul>';
+echo '</nav>';
+
+// Форма для ввода номера страницы
+echo '<form action="" method="get" class="d-flex justify-content-center pt-3 pb-3 mb-3>';
+echo '<label for="page">Выберите страницу:</label>';
+echo '<input type="number" id="page" name="page" min="1" max="' . $total_pages . '">';
+echo '<input type="submit" value="Перейти">';
+echo '</form>';
+
+#! Pagination end
 
     foreach ($items as $inside_array) {
       #! внутренний номер

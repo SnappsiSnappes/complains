@@ -297,7 +297,7 @@ if ($_SESSION['privilege'] == 'super_user') {
     if ($result[0]['is_published'] == 0) {
         echo <<<EOT
     <div class='container'>
-    <form action="Koroteev_controller.php" method="post">
+    <form action="com1_controller.php" method="post">
     <input type="hidden" name="action" value="activate">
     <input type="hidden" name="id" value="{$_GET['select_from_post']}">
     <div class="d-grid gap-2 col-6 mx-auto">

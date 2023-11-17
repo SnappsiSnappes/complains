@@ -299,7 +299,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             output += label + ' = ' + inputs[i].value;
                         }
                     }
-
+                    /* скрыть фулл текст чтобы не конфузить менеджеров */
+                    document.getElementById('full_text').style.display = 'none'
+                    /* end */
                     document.getElementById('full_text').value = output + ' <br><b> Основной текст:</b><br>' + document.getElementById('full_text').value;
                 });
             </script>
