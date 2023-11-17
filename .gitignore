@@ -1,1 +1,3 @@
 _docker/db_service/tmp/
+/docker-compose.yml
+docker-compose.yml
